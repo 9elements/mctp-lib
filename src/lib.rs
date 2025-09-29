@@ -3,7 +3,6 @@
 //! This crate provides a platform agnostic MCTP stack.
 //!
 //! It utilizes the [mctp-estack]() and re-exports parts of it.
-
 #![cfg_attr(not(test), no_std)]
 
 use mctp::{Eid, Error, MsgIC, MsgType, Result, Tag};

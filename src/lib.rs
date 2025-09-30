@@ -402,17 +402,21 @@ mod test {
     /// Create two routers, send a request from B to A and receive the echo response
     #[test]
     fn roundtrip() {
+        const REQ_HANDLES: usize = 8;
+        const LISTENER_HANDLES: usize = 8;
         let buf_out_a = RefCell::new(Vec::new());
         let outbound_a: BufferSender<255> = BufferSender {
             packets: &buf_out_a,
         };
-        let mut router_a = Router::new(Eid(42), 0, outbound_a);
+        let mut router_a: Router<_, LISTENER_HANDLES, REQ_HANDLES> =
+            Router::new(Eid(42), 0, outbound_a);
 
         let buf_out_b = RefCell::new(Vec::new());
         let outbound_b: BufferSender<255> = BufferSender {
             packets: &buf_out_b,
         };
-        let mut router_b = Router::new(Eid(112), 0, outbound_b);
+        let mut router_b: Router<_, LISTENER_HANDLES, REQ_HANDLES> =
+            Router::new(Eid(112), 0, outbound_b);
 
         // create a new listener and expect the cookie value to be 0 (raw index of the underlying table)
         let listener = router_a.listener(mctp::MsgType(0)).unwrap();

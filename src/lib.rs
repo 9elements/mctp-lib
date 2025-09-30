@@ -423,7 +423,7 @@ mod test {
 
         let requester = router_b.req(Eid(42)).unwrap();
 
-        let payload: Vec<u8> = [3, 4, 5].into_iter().cycle().take(300).collect(); // build a simple 300 byte paylaod
+        let payload = [1; 300]; // 300 byte payload to exeed 255 byte MTU
         router_b
             .send(
                 None,

@@ -84,14 +84,14 @@ impl<S: Sender, const MAX_LISTENER_HANDLES: usize, const MAX_REQ_HANDLES: usize>
         match msg.tag {
             Tag::Unowned(_) => {
                 // check for matching requests
-                if let Some(cookie) = msg.cookie() {
-                    if Self::requests_index_from_cookie(cookie)
+                if let Some(cookie) = msg.cookie()
+                    && Self::requests_index_from_cookie(cookie)
                         .is_some_and(|i| self.requests[i].is_some())
-                    {
-                        msg.retain();
-                        return Ok(());
-                    }
+                {
+                    msg.retain();
+                    return Ok(());
                 }
+
                 // In this case an unowned message that isn't associated to a request was received.
                 // This might happen, if if this endpoint was inteded to route the packet to a different
                 // bus it is connected to (bridge configuration).

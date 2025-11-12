@@ -1,0 +1,11 @@
+header:
+  license:
+    spdx-id: Apache-2.0
+    copyright-owner: OpenPRoT a Series of LF Projects, LLC
+    copyright-year: 2025
+    software-name: mctp-lib
+
+  paths:
+    - '**/*.rs'
+
+  comment: on-failure
